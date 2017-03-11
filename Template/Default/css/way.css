@@ -1,0 +1,57 @@
+/**
+ * @author 我本奈何
+ * @version 1.2 beta
+ * @link https://plsYou.com
+ */
+
+/* padding */
+.nopadding{padding:0;}
+.padding{padding:15px;}
+.padding-top{padding-top:15px;}
+.padding-left{padding-left:15px;}
+.padding-right{padding-right:15px;}
+/* margin */
+.nomargin{margin:0;}
+.margin{margin:15px;}
+.margin-left{margin-left:15px;}
+.margin-right{margin-right:15px;}
+.margin-top-26{margin-top:26px;}
+.margin-top{margin-top:12px;}
+.margin-bottom{margin-bottom:12px;}
+/* border */
+.noborder{border:none !important;}
+.border {border: 1px solid #F1F1F1;-moz-border-radius: 3px;-webkit-border-radius: 3px;border-radius:3px;background: #FFFFFF;}
+.border-top{border-top:1px solid #F1F1F1;}
+.border-bottom{border-bottom:1px solid #F1F1F1;}
+/* seach form */
+form[role="search"] input{border-radius: 4px 0 0 4px !important;}
+form[role="search"] button{width:40px;border-left:0;margin-left: 0 !important;background: transparent url(../img/icon-search.png) no-repeat center center;direction: ltr;text-indent: -9999em;}
+/* body */
+#body{margin-top:55px;}	
+/* album body */
+article .album {margin:7px;margin-bottom: -10px;}
+article .album ul {overflow: hidden;position: relative;}
+article .album ul li {position: absolute;margin-bottom: 15px;width: 238px;left: -9999px;top: -9999px;border: 1px solid #f1f1f1;-moz-border-radius: 3px;-webkit-border-radius: 3px;border-radius: 3px;overflow: hidden;box-shadow: 0 0 2px rgba(0, 0, 0, 0.1);box-shadow: 0 0 0 #FFF,0 0 0 #FFF,0 1px 1px #EEE;}
+article .album ul li img{width:238px;-moz-border-radius: 3px 3px 0 0;-webkit-border-radius: 3px 3px 0 0;border-radius: 3px 3px 0 0;}
+article .album ul li span{display:block;padding:8px 10px;}
+#photoshow {width:0;height:0;top: 0;left: 0;text-align:center;display: none;position: absolute;padding: 0;margin: 0;border-radius: 3px;border:1px solid #bbb;background: #FFF url(../img/loading.gif) no-repeat scroll  center center;z-index:100;}
+#photoshow img {border:0;cursor: pointer;margin:2px;background: #FFF;position: relative;border-radius:3px;}
+#photoshow_sidebar{font-size:12px;width:199px;height:100%;padding:10px;float:right;overflow:hidden;background:#bbb;border-radius:0 3px 3px 0;}
+.div_sidebar_title{font-size:18px;line-height:36px;color:#FFF;text-align:center;padding:20px auto;background:#5fbdf1;	}
+.div_sidebar_content{background:#FFF;line-height:20px;text-align:left;padding:10px;}
+#photoshow_sidebar div span{margin-left:10px;background:#FFF;}
+#photoshow_close{font-size:18px;line-height:36px;color:#FFF;text-align:center;padding:20px auto;background:#5fbdf1;	cursor: pointer;position: absolute;bottom:10px;right:10px;width:179px;}
+#photoshow_close:hover{color:#EEE;}
+.imgfilter {opacity:0.6;filter:url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale");/* Firefox 10+, Firefox on Android */filter: gray;-webkit-filter:grayscale(100%);}
+.pic-add {width:600px;height:400px;border:1px solid #F1F1F1;background:#FFF;position:absolute;top: 50%;left: 50%;margin: -200px 0 0 -300px;-moz-border-radius: 3px;-webkit-border-radius: 3px;border-radius:3px;z-index:100;}
+#method_1, #method_2, #method_3 {height: 280px;OVERFLOW-Y: auto;OVERFLOW-X: hidden;}
+/* page nav */
+.page-navigator{list-style: none;color:#FFF;font-size:11px;line-height:30px;margin:20px 0;font-family:'Lucida Grande',Verdana,Arial;}
+.page-navigator li a{text-align:center;display:block;float:left;width:30px;height:30px;border:none;text-decoration:none;margin-right:10px;background:#FFF;-moz-border-radius: 50%;-webkit-border-radius: 50%;border-radius:50%;}
+.page-navigator span{display:none;}
+.page-navigator li a:hover{background:#AAA;color:#FFF;}
+.page-navigator .current a{background:#BBB;color:#FFF;}
+/* footer */
+#footer{color:#a5a5a5;background:#4b4b4b;padding:20px 0;margin-top:20px;display:block;}
+#footer .container a{color: #FFF;}
+
