@@ -10,7 +10,7 @@
 1. 上传文件夹到 plugins 目录 插件目录名称必须是 Album
 2. 设置 Data 目录 可写 ， 设置 Config.inc.php，Language.ini 文件可以写
 3. 后台插件管理开启应用
-4. 手动修改模板 增加 Album  地址
+4. 手动修改模板 在适合的地方增加 Album 地址：yourDomain/Album
 5. 从 yourDomain/Album 进入安装程序
 6. 前台登录 进行个性设置
 
@@ -18,6 +18,7 @@
 - 时隔2年多 上传到 GitHub
 - 更新 1.0/14.10.10 兼容
 - 更新 PHP7 兼容
+- 修复 前台登录
 
 ### 2014/08/15 
 * 放弃路由劫持，使用 Helper::addRoute 方式
