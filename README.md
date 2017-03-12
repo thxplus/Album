@@ -5,6 +5,9 @@
  * @version 1.2 beta
  * @link https://plsYou.com
 
+ # 演示地址
+ https://plsyou.com/Album/
+
 
 ## 安装方法
 1. 上传文件夹到 plugins 目录 插件目录名称必须是 Album
