@@ -17,7 +17,7 @@
  					});
  				</script>
  						<div id="user_login" style="display:none;">
- 							<form action="<?php echo $sidebar['Manage']['url_login']['0']; ?>action/login" method="post" name="login" role="form">
+ 							<form action="<?php echo $sidebar['Manage']['url_login']['0']; ?>index.php/action/login" method="post" name="login" role="form">
  								<div class="form-group margin-left margin-right">
 									<input type="text" id="name" name="name" value="" placeholder="用户名" class="form-control" autofocus="">
 								</div>
