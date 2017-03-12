@@ -1,5 +1,4 @@
 <div class="col-md-4 visible-md visible-lg" >
-
 	<?php if (isset($sidebar['Manage'])) : ?>
     <section class="border margin-top-26">
 		<h5 class="nomargin padding padding-left border-bottom"><?php _e('管理相册'); ?></h5>
@@ -17,7 +16,7 @@
  					});
  				</script>
  				<div id="user_login" style="display:none;">
- 					<form action="<?php echo $sidebar['Manage']['url_login']['0']; ?>action/login" method="post" name="login" role="form">
+ 					<form action="<?php $options->loginAction(); ?>" method="post" name="login" role="form">
  						<div class="form-group margin-left margin-right">
 							<input type="text" id="name" name="name" value="" placeholder="用户名" class="form-control" autofocus="">
 						</div>
