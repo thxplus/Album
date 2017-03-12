@@ -63,7 +63,7 @@
                 <h1 class="typecho-install-title"><?php _e('安装成功!'); ?></h1>
                 <div class="typecho-install-body">
                     <div class="message success">恭喜！插件已经安装完成！</div>
-										<p>源码：<a href="http://way.so" target="_bank">我本奈何</a> <br>前端：<a href="http://" target="_bank">章萧醇</a> </p>
+										<p>源码：<a href="https://plsYou.com" target="_bank">我本奈何</a> <br>前端：<a href="http://" target="_bank">章萧醇</a> </p>
                     <div class="p message success"><?php _e('作者是非职业写手，也是业余中的业余选手，仅仅是为了折腾。'); ?></div>
                 <h1 class="typecho-install-title"><?php _e('注意事项!'); ?></h1>
                     <div class="p message notice">
@@ -72,7 +72,7 @@
                      Album/Data/Baseconfig.php ... 当前状态：<?php if ( is_writable('Baseconfig.php')){echo '<span style="color:green;">可写</span>';}else{echo '<span style="color:red;">不可写</span>';} ?><br/>
                      Album/Data/Config.inc.php .... 当前状态：<?php if ( is_writable('Config.inc.php')){echo '<span style="color:green;">可写</span>';}else{echo '<span style="color:red;">不可写</span>';} ?><br/>
                      Album/Data/Language.ini ....... 当前状态：<?php if ( is_writable('Language.ini')){echo '<span style="color:green;">可写</span>';}else{echo '<span style="color:red;">不可写</span>';} ?><br/>
-                     程序会生成一个 Album/Data/install.lock 文件，如果需要重新安装请删除该文件，刷新任意页面进入安装。
+                     程序会生成一个 Album/Data/install.lock 文件，如果需要重新安装请删除该文件，刷新任意相册页面进入安装。
                     </div>
                     <div class="p message success"><a href="<?php echo $siteUrl; ?>"><?php _e('点击这里返回您的 Blog'); ?></a></div>
                 </div>
@@ -110,69 +110,54 @@
         <?php elseif (isset($_GET['config'])): //初始化配置
         if ('config' == _r('action')) {
         	$err = '';
-					$success = true ;
-					$table_exist = array() ;
-					if( file_exists('Baseconfig.php')) unlink('Baseconfig.php');
-/*				$db = Typecho_Db::get();	
-					$result = $db->fetchAll($db->select('slug')->from('table.contents')->where('`slug` = ?', $_POST['app_path']));
+			$success = true ;
+			$table_exist = array() ;
+			if( file_exists('Baseconfig.php')) unlink('Baseconfig.php');
 
-					if ( isset($result['0']) ){
-						$success = false ;
-						$err .= '您设定的 相册路径 '.$_POST['app_path'].' 已经被占用！<br/> 你可以改变路径名或者删除该命名的页面。<br/>';
-					}else{
-						$db->query($db->insert('table.contents')->rows(array( 'title'=>$_POST['app_name'], 'slug'=>$_POST['app_path'], 'created'=>time(), 'modified'=>time(), 'text'=>"[album]\r\n请不要单独变更此页的路径名！\r\n如果需要，请先到相册前台基础设置里更改相册路径名\r\n然后再来这里变更\r\n请务必保持二者一致！", 'authorId'=>'1', 'order'=>'100', 'template'=>NULL, 'type'=>'page', 'status'=>'publish', 'password'=>NULL, 'commentsNum'=>'0', 'allowComment'=>'0', 'allowPing'=>'0', 'allowFeed'=>'0', 'parent'=>'0', )));
+			$db = Typecho_Db::get();	
+			$prefix = $db->getPrefix();
+			$album_table = array('album','album_local','album_shoot','album_network','album_category','album_count');
+
+			for ($i=0;$i<count($album_table);$i++){
+
+				if(function_exists('mysqli_connect')){  
+
+					if( count ( $db->fetchAll($db->query("SHOW TABLES LIKE '".$prefix.$album_table[$i]."'" )) )==1){
+						$table_exist[] = $prefix.$album_table[$i] ;
+						$err .= '->数据表 '.$prefix.$album_table[$i].' 已经存在!<br/>';
 					}
-			*/		
-					$db = Typecho_Db::get();	
-					$prefix = $db->getPrefix();
-					$album_table = array('album','album_local','album_shoot','album_network','album_category','album_count');
 
-					for ($i=0;$i<count($album_table);$i++){
-
-						if(!function_exists('mysql_connect')){  
-
-							if( mysqli_num_rows( mysqli_query("SHOW TABLES LIKE '".$prefix.$album_table[$i]."'" ) )==1){
-								$table_exist[] = $prefix.$album_table[$i] ;
-								$err .= '->数据表 '.$prefix.$album_table[$i].' 已经存在!<br/>';
-							}
-
-						}else{
+				}else{
 						
-							if( mysql_num_rows( mysql_query("SHOW TABLES LIKE '".$prefix.$album_table[$i]."'" ) )==1){
-								$table_exist[] = $prefix.$album_table[$i] ;
-								$err .= '->数据表 '.$prefix.$album_table[$i].' 已经存在!<br/>';
-							}
+					if( mysql_num_rows( mysql_query("SHOW TABLES LIKE '".$prefix.$album_table[$i]."'" ) )==1){
+						$table_exist[] = $prefix.$album_table[$i] ;
+						$err .= '->数据表 '.$prefix.$album_table[$i].' 已经存在!<br/>';
+					}
 
+				}
+			}
+			
+			if ( count($table_exist) > 0  ){
+				$success = false ;
+				if ( isset($_POST['table']) ){
+					if ( $_POST['table'] == 1 ){
+						for ( $i=0; $i<count($table_exist); $i++){
+							$db->query("DROP TABLE IF EXISTS {$table_exist[$i]}");
 						}
 					}
-					
-					if ( count($table_exist) > 0  ){
-						$success = false ;
-						if ( isset($_POST['table']) ){
-							if ( $_POST['table'] == 1 ){
-								for ( $i=0; $i<count($table_exist); $i++){
-									$db->query("DROP TABLE IF EXISTS {$table_exist[$i]}");
-								}
-							}
 							
-							if ( $_POST['table'] == 2 ){
-						//		if ( isset($result['0']) ){
-									$complete = true ;
-						/*		}else{
-									$db->query($db->insert('table.contents')->rows(array( 'title'=>$_POST['app_name'], 'slug'=>$_POST['app_path'], 'created'=>time(), 'modified'=>time(), 'text'=>"[album]\r\n请不要单独变更此页的路径名！\r\n如果需要，请先到相册前台基础设置里更改相册路径名\r\n然后再来这里变更\r\n请务必保持二者一致！", 'authorId'=>'1', 'order'=>'100', 'template'=>NULL, 'type'=>'page', 'status'=>'publish', 'password'=>NULL, 'commentsNum'=>'0', 'allowComment'=>'0', 'allowPing'=>'0', 'allowFeed'=>'0', 'parent'=>'0', )));
-									$complete = true ;
-								}
-								*/
-							}
-							
-							$success = true ;
-						}
+					if ( $_POST['table'] == 2 ){
+						$complete = true ;
 					}
+							
+					$success = true ;
+				}
+			}
 					
 					
-					/* 构造配置文件 */
+			/* 构造配置文件 */
 					
-					$lines[] = '<?php
+			$lines[] = '<?php
 /**
  * Album For Typecho, base on 1.0/14.10.10
  *
@@ -181,40 +166,36 @@
  * @version 1.2 beta
  * @link https://plsYou.com
  */';
- 					$lines[] = "\n\n";
-					//$lines[] = "\$app_name = '".$_POST['app_name']."';\n";			//相册名称
-					//$lines[] = "\$app_path = '".$_POST['app_path']."';\n";			//相册路径名
-					$lines[] = "\$app_welcome = '".$_POST['app_welcome']."';\n";									//欢迎语
-					$lines[] = "\$read_order = '".$_POST['read_order']."';\n";		//读取顺序 
-					/* 二个模板体系 */
-					//$lines[] = "\$theme = 'album';\n";													//相册模板类型 album or typecho 
-					/* 检测目录 确定模板名称*/
-					$lines[] = "\$template = '/Default/';\n";										//相册模板选择 
-					$lines[] = "\$category_show = 'no';\n";											//菜单是否显示分类
-					$lines[] = "\$per_page_num = '".$_POST['per_page_num']."';\n";										//每页图片显示数量
-					$lines[] = "\$page_nav_show = 'yes';\n";										//是否显示页码导航
-					$lines[] = "\$ajax_Calendar = 'normal';\n";
-					$contents = implode('', $lines);
-					@file_put_contents('Baseconfig.php', $contents);
-					$_SESSION['typecho_ablum'] = 1;
+ 			$lines[] = "\n\n";
+			$lines[] = "\$app_welcome = '".$_POST['app_welcome']."';\n";									//欢迎语
+			$lines[] = "\$read_order = '".$_POST['read_order']."';\n";		//读取顺序 
+			/* 检测目录 确定模板名称*/
+			$lines[] = "\$template = '/Default/';\n";										//相册模板选择 
+			$lines[] = "\$category_show = 'no';\n";											//菜单是否显示分类
+			$lines[] = "\$per_page_num = '".$_POST['per_page_num']."';\n";										//每页图片显示数量
+			$lines[] = "\$page_nav_show = 'yes';\n";										//是否显示页码导航
+			$lines[] = "\$ajax_Calendar = 'normal';\n";
+			$contents = implode('', $lines);
+			@file_put_contents('Baseconfig.php', $contents);
+			$_SESSION['typecho_ablum'] = 1;
 					
-					if($success != true && file_exists('Baseconfig.php')) {
-						unlink('Baseconfig.php');
-						echo '<br/><div class="emessage error" style="padding:5px;">'.$err.'</div>';
-					}
+			if($success != true && file_exists('Baseconfig.php')) {
+				unlink('Baseconfig.php');
+				echo '<br/><div class="emessage error" style="padding:5px;">'.$err.'</div>';
+			}
 					
-					if (!file_exists('Baseconfig.php')) {
-						$success = false ;
-					} else if ( isset($complete) ){
-						header('Location: Install.php?finish');
-						exit;
-					}else if ($success == true) {
-						header('Location: Install.php?start');
-						exit;
-					}
+			if (!file_exists('Baseconfig.php')) {
+				$success = false ;
+			} else if ( isset($complete) ){
+				header('Location: Install.php?finish');
+				exit;
+			}else if ($success == true) {
+				header('Location: Install.php?start');
+				exit;
+			}
 					
-				}
-        ?> 
+		}
+     ?> 
 				<form method="post" action="?config" name="config">
 					<div class="typecho-install-body">  
 						<h2><?php _e('基础设置'); ?></h2> 	
