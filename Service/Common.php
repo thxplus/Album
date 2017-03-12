@@ -346,7 +346,7 @@
 	} 
 
 	public static function CheckWebAddr($url){ 
-		if (!ereg("^http://[_a-zA-Z0-9-]+(.[_a-zA-Z0-9-]+)*$", $url)) { 
+		if (!preg_match('/http:\/\/[\w.]+[\w\/]*[\w.]*\??[\w=&\+\%]*/is',$url)) { 
 			return false; 
 		} 
 		return true; 
