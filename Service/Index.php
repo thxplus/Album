@@ -7,75 +7,75 @@
  * @version    $Id: Index.php 2014-8-15 11:26:22
  */
  
-class Index{
-	public function show( $req = array() ){
-		include 'usr/plugins/Album/Data/Baseconfig.php';
-		$k = explode(',',$req);
-		$From = array( 'all','local','shoot','network');
-		$db = Typecho_Db::get();
-		$cur_page = $k['4'];
-		
-		if ( $k['3'] == "1" ){
-			$url = Common::request_path();
-			$manage_Data = array();
-			$manage_Data['action'] = $url.$req;
-			$manage_Data['category'] = NULL;
-  		$db_category = $db->fetchAll($db->select()->from('table.album_category'));
+ class Index{
+ 	public function show( $req = array() ){
+ 		include 'usr/plugins/Album/Data/Baseconfig.php';
+ 		$k = explode(',',$req);
+ 		$From = array( 'all','local','shoot','network');
+ 		$db = Typecho_Db::get();
+ 		$cur_page = $k['4'];
+ 		
+ 		if ( $k['3'] == "1" ){
+ 			$url = Common::request_path();
+ 			$manage_Data = array();
+ 			$manage_Data['action'] = $url.$req;
+ 			$manage_Data['category'] = NULL;
+ 			$db_category = $db->fetchAll($db->select()->from('table.album_category'));
 
-  		for ( $i=0; $i<count($db_category); $i++ ){
-  			$manage_Data['category'] .= '<option value="'.$db_category[$i]['id'].'">'.$db_category[$i]['name'].'</option>';
-  		}
-  		
-  		if ( isset($_POST['submit']) ){
-  			
-				$MSG = array
-						(
-								'0' => 'Update Complete',
-								'1' => 'No File Chosen',
-								'2' => 'Error File Type',
-								'3' => 'Failed To upload',
-								'4' => 'Error Thumb File Type! [GD METHOD]',
-								'5' => 'All EXIF Message Undefined',
-								'6' => 'Not Supported File Type [EXIF]',
-								'7' => 'Function read_exif_data() Not Exists',
-								'8' => 'None EXIF Message Found',
-								'9' => 'Error Images Address',
-								'10' => 'Error Directory',
-								'11' => 'None Image Found ',
-								'12' => 'Make Directory Error',
-								'13' => 'Error File Type [curl]',
-								'14' => 'Failed To Get Image [curl]',
-								'99' => 'Unauthorized'
-						);
+ 			for ( $i=0; $i<count($db_category); $i++ ){
+ 				$manage_Data['category'] .= '<option value="'.$db_category[$i]['id'].'">'.$db_category[$i]['name'].'</option>';
+ 			}
+ 			
+ 			if ( isset($_POST['submit']) ){
+ 				
+ 				$MSG = array
+ 				(
+ 					'0' => 'Update Complete',
+ 					'1' => 'No File Chosen',
+ 					'2' => 'Error File Type',
+ 					'3' => 'Failed To upload',
+ 					'4' => 'Error Thumb File Type! [GD METHOD]',
+ 					'5' => 'All EXIF Message Undefined',
+ 					'6' => 'Not Supported File Type [EXIF]',
+ 					'7' => 'Function read_exif_data() Not Exists',
+ 					'8' => 'None EXIF Message Found',
+ 					'9' => 'Error Images Address',
+ 					'10' => 'Error Directory',
+ 					'11' => 'None Image Found ',
+ 					'12' => 'Make Directory Error',
+ 					'13' => 'Error File Type [curl]',
+ 					'14' => 'Failed To Get Image [curl]',
+ 					'99' => 'Unauthorized'
+ 					);
 
-  			if ( Common::admin() == false ) { 
-					$data['ERR']['KEY']['0'] = '99';
-					$data['ERR']['NAME']['0'] = '';
-					$data['ERR']['MSG']['0'] = $key['99'];
-  				return $data; 
-  			}
-  			
-				include_once 'usr/plugins/Album/Service/Post.php';
-				$post = new Post();
-				$post = $post->route($_POST,$_FILES);
-				
-				$_Err = array();
-				for ($i=0; $i<count($post);$i++){
-					$_Err['KEY'][$i] = $post[$i]['err'];
-					$_Err['NAME'][$i] = $post[$i]['msg'];
-				}
-				
-				$_Err_m = array();  
-				foreach($_Err['KEY'] as $v){  
-					@$_Err_m[$v] ++ ;    
-				} 
-				
-				foreach( $_Err_m as $key=>$value ){
-					$data['ERR']['KEY'][] = $key ;
-					$data['ERR']['SUM'][] = $value ;
-					$data['ERR']['MSG'][] = $MSG[$key] ;
-				}
-				
+ 				if ( Common::admin() == false ) { 
+ 					$data['ERR']['KEY']['0'] = '99';
+ 					$data['ERR']['NAME']['0'] = '';
+ 					$data['ERR']['MSG']['0'] = $key['99'];
+ 					return $data; 
+ 				}
+ 				
+ 				include_once 'usr/plugins/Album/Service/Post.php';
+ 				$post = new Post();
+ 				$post = $post->route($_POST,$_FILES);
+ 				
+ 				$_Err = array();
+ 				for ($i=0; $i<count($post);$i++){
+ 					$_Err['KEY'][$i] = $post[$i]['err'];
+ 					$_Err['NAME'][$i] = $post[$i]['msg'];
+ 				}
+ 				
+ 				$_Err_m = array();  
+ 				foreach($_Err['KEY'] as $v){  
+ 					@$_Err_m[$v] ++ ;    
+ 				} 
+ 				
+ 				foreach( $_Err_m as $key=>$value ){
+ 					$data['ERR']['KEY'][] = $key ;
+ 					$data['ERR']['SUM'][] = $value ;
+ 					$data['ERR']['MSG'][] = $MSG[$key] ;
+ 				}
+ 				
 				/*
 				for ($i=0; $i<count($post);$i++){
 					$data['ERR']['KEY'][$i] = $post[$i]['err'];
@@ -85,14 +85,14 @@ class Index{
 				}
 			*/
 				
-			
 				
-  		}
-  		
+				
+			}
+			
 		}
 		
-  	$query = $db->select()->from('table.album');
-  	
+		$query = $db->select()->from('table.album');
+		
 		if ($k['2']){ 
 			$tag 	= substr($k['2'],0,1);
 			$time = substr($k['2'],1) + 8*3600;
@@ -122,15 +122,15 @@ class Index{
 		}
 		if ($k['1']) $query = $query->where('from = ?', $From[$k['1']] );
 		if ( Common::admin() == false ) {
-  		$query = $query->where('public = ?', '1' );
-  	}
-  	if ( $read_order == 'DESC' ){
-  		$query = $query->order('created', Typecho_Db::SORT_DESC); 
-  	}else{
-  		$query = $query->order('created', Typecho_Db::SORT_ASC); 
-  	}
-  	
-  	
+			$query = $query->where('public = ?', '1' );
+		}
+		if ( $read_order == 'DESC' ){
+			$query = $query->order('created', Typecho_Db::SORT_DESC); 
+		}else{
+			$query = $query->order('created', Typecho_Db::SORT_ASC); 
+		}
+		
+		
 		//·ÖÒ³´¦Àí
 		$total = count($db->fetchAll($query));
 		$max_page = ceil($total/$per_page_num);

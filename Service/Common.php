@@ -1,4 +1,4 @@
-<?php
+	<?php
 
  /**
  * Album For Typecho, base on 1.0/14.10.10
@@ -7,16 +7,16 @@
  * @version    $Id: Common.php 2014-8-15 10:28:36
  */
 
-class Common {
-	
-	public static function request_path(){
-		return self::base() . '/' ;
-	}
-	
-	public static function request_uri( $request=NULL ){
-		$path = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER["REQUEST_URI"] ;
-		$uri = str_replace( self::base() ,'',$path);
-		if ( $uri == NULL ){
+ class Common {
+ 	
+ 	public static function request_path(){
+ 		return self::base() . '/' ;
+ 	}
+ 	
+ 	public static function request_uri( $request=NULL ){
+ 		$path = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER["REQUEST_URI"] ;
+ 		$uri = str_replace( self::base() ,'',$path);
+ 		if ( $uri == NULL ){
 			$req = '0,0,0,0,1';//c,f,d,m,p
 		}else{
 			$uri = str_replace( '/','',$uri );
@@ -34,7 +34,7 @@ class Common {
 	}
 	
 	private static function base(){
-	
+		
 	//	include 'usr/plugins/Album/Data/Baseconfig.php';
 		$options = Typecho_Widget::widget('Widget_Options');
 		$options->rewrite == 0 ? $index = 'index.php/' : $index = '';
@@ -116,28 +116,28 @@ class Common {
 			$ImgHeight = $img_msg['1'];
 			$WH = $ImgWidth/$ImgHeight;
 
-				switch ( $thumb_Method ){
-					case 1 :
-						$width = $thumb_width ;
-						$height = $width/$WH ;
-						if ( $width/$WH > $thumb_MaxHeight ) $height = $thumb_MaxHeight ;
-						break;
-					case 2 :
-						$height = $thumb_height ;
-						$height*$WH > $thumb_MaxWidth ? $width = $thumb_MaxWidth : $width = $height*$WH ;
-						break;
-					case 3 :
-						$width = $thumb_width ;
-						$height = $thumb_height ;
-						break;
-				}
+			switch ( $thumb_Method ){
+				case 1 :
+				$width = $thumb_width ;
+				$height = $width/$WH ;
+				if ( $width/$WH > $thumb_MaxHeight ) $height = $thumb_MaxHeight ;
+				break;
+				case 2 :
+				$height = $thumb_height ;
+				$height*$WH > $thumb_MaxWidth ? $width = $thumb_MaxWidth : $width = $height*$WH ;
+				break;
+				case 3 :
+				$width = $thumb_width ;
+				$height = $thumb_height ;
+				break;
+			}
 			
-				switch ($img_msg['2']){
-					case 1 : $Img = @imagecreatefromgif($img_path);break;
-					case 2 : $Img = @imagecreatefromjpeg($img_path);break;
-					case 3 : $Img = @imagecreatefrompng($img_path);break;
-				}
-				
+			switch ($img_msg['2']){
+				case 1 : $Img = @imagecreatefromgif($img_path);break;
+				case 2 : $Img = @imagecreatefromjpeg($img_path);break;
+				case 3 : $Img = @imagecreatefrompng($img_path);break;
+			}
+			
 			if ( $rename === false ){
 				$thumb_Path = $thumb_path.$info['basename'];
 			}else{
@@ -153,7 +153,7 @@ class Common {
 
 				$m = $width/$height ;
 				$n = $ImgWidth/$ImgHeight ;
-					
+				
 				if ( $m < $n ){
 					$tmp_width = $width;
 					$tmp_height = $width/$n ;
@@ -209,7 +209,7 @@ class Common {
 			$msg['msg'] = 'Function read_exif_data() Not Exists!';
 			return $msg;
 		}
-		 
+		
 		if ( read_exif_data($file, 'IFD0') === false ){
 			$msg['err'] = 8 ;
 			$msg['msg'] = 'None EXIF Message Found!';
@@ -307,15 +307,15 @@ class Common {
 	}
 	
 	public static function makeDir($path){    
-    return is_dir($path) || (self::makeDir(dirname($path)) && mkdir($path,0777));
+		return is_dir($path) || (self::makeDir(dirname($path)) && mkdir($path,0777));
 	} 
 	
 	public function exif_get_float($value) { 
-  	$pos = strpos($value, '/'); 
-  	if ($pos === false) return (float) $value; 
-  		$a = (float) substr($value, 0, $pos); 
-  		$b = (float) substr($value, $pos+1); 
-  	return ($b == 0) ? ($a) : ($a / $b); 
+		$pos = strpos($value, '/'); 
+		if ($pos === false) return (float) $value; 
+		$a = (float) substr($value, 0, $pos); 
+		$b = (float) substr($value, $pos+1); 
+		return ($b == 0) ? ($a) : ($a / $b); 
 	} 
 	
 	public function hex2rgb($hexColor) { 
@@ -323,10 +323,10 @@ class Common {
 		$color = str_replace('#', '', $hexColor); 
 		if (strlen($color) > 3) { 
 			$rgb = array( 
-			'r' => hexdec(substr($color, 0, 2)), 
-			'g' => hexdec(substr($color, 2, 2)), 
-			'b' => hexdec(substr($color, 4, 2)) 
-			); 
+				'r' => hexdec(substr($color, 0, 2)), 
+				'g' => hexdec(substr($color, 2, 2)), 
+				'b' => hexdec(substr($color, 4, 2)) 
+				); 
 		} else { 
 			$r = substr($color, 0, 1); 
 			$g = substr($color, 1, 1); 
@@ -335,7 +335,7 @@ class Common {
 				'r' => hexdec($r.$r), 
 				'g' => hexdec($g.$g), 
 				'b' => hexdec($b.$b) 
-			); 
+				); 
 		} 
 		
 		if ( (strlen($color) < 3) || (strlen($color) > 6) ){
@@ -353,16 +353,16 @@ class Common {
 	} 
 
 	public static function check_remote($url){
-    $curl = curl_init($url);
-    curl_setopt($curl, CURLOPT_NOBODY, true);
-    $result = curl_exec($curl);
-    $exists = false;
-    if ($result !== false){
-        $statusCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-        if ($statusCode == 200){$exists = true;}
-    }
-    curl_close($curl);
-    return $exists;
+		$curl = curl_init($url);
+		curl_setopt($curl, CURLOPT_NOBODY, true);
+		$result = curl_exec($curl);
+		$exists = false;
+		if ($result !== false){
+			$statusCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+			if ($statusCode == 200){$exists = true;}
+		}
+		curl_close($curl);
+		return $exists;
 	}
 	
 	public static function remote_filesize($url){
