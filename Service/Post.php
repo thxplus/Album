@@ -22,9 +22,22 @@
  		$POST = array_map('Common::form' , $POST);
  		$res = array();
  		
- 		if ( !in_array( $POST['method'], array('local','website','scan','move','del') ) ) return false ;
+ 		//if ( !in_array( $POST['method'], array('local','website','scan','move','del') ) ) return false ;
  		
- 		$res = self::$POST['method']( $POST, $FILES );
+ 		//$res = self::$POST['method']( $POST, $FILES );
+    if ( 'local' == $POST['method'] ){
+      $res = self::local( $POST, $FILES );
+    }else if('website' == $POST['method']){
+      $res = self::website( $POST, $FILES );
+    }else if('scan' == $POST['method']){
+      $res = self::scan( $POST, $FILES );
+    }else if('move' == $POST['method']){
+      $res = self::move( $POST, $FILES );
+    }else if('del' == $POST['method']){
+      $res = self::del( $POST, $FILES );
+    }else {
+      $res = false;
+    }
 
  		return $res;
  	}
@@ -425,14 +438,19 @@
   				'server' => $server )
   			)
   		);
-  	
-  	$album['iid'] = mysql_insert_id() ;
+  	if(function_exists('mysqli_insert_id')){  
+      $prefix = $db->getPrefix();
+      $rrr = $db->fetchAll($db->query( "select * from {$prefix}album order by id desc limit 1;"));
+      $album['iid'] = $rrr['0']['id'];
+    }else{
+      $album['iid'] = mysql_insert_id() ;
+    }
   	return $album;
   }
   
   private function db_album_local( $POST, $tid=NULL, $pid=NULL, $title=NULL, $iid ){
   	$db = Typecho_Db::get();
-  	$db->query(
+    $db->query(
   		$db->insert('table.album_local')->rows(
   			array( 
   				'iid' => $iid, 
