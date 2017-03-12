@@ -16,20 +16,20 @@
 						$("section .login").click(function(){ $("#user_login").slideToggle(100,function(){}); });
  					});
  				</script>
- 						<div id="user_login" style="display:none;">
- 							<form action="<?php echo $sidebar['Manage']['url_login']['0']; ?>index.php/action/login" method="post" name="login" role="form">
- 								<div class="form-group margin-left margin-right">
-									<input type="text" id="name" name="name" value="" placeholder="用户名" class="form-control" autofocus="">
-								</div>
-								<div class="form-group margin-left margin-right">
-									<input type="password" id="password" name="password" class="form-control" placeholder="密码">
-								</div>
-								<div class="form-group margin-left margin-right">
- 									<button type="submit" class="form-control btn btn-primary">登录</button>
- 									<input type="hidden" name="referer" value="<?php echo $sidebar['Manage']['url_login_referer']['0']; ?>">
-								</div>
-							</form>
- 						</div>
+ 				<div id="user_login" style="display:none;">
+ 					<form action="<?php echo $sidebar['Manage']['url_login']['0']; ?>action/login" method="post" name="login" role="form">
+ 						<div class="form-group margin-left margin-right">
+							<input type="text" id="name" name="name" value="" placeholder="用户名" class="form-control" autofocus="">
+						</div>
+						<div class="form-group margin-left margin-right">
+							<input type="password" id="password" name="password" class="form-control" placeholder="密码">
+						</div>
+						<div class="form-group margin-left margin-right">
+ 							<button type="submit" class="form-control btn btn-primary">登录</button>
+ 							<input type="hidden" name="referer" value="<?php echo $sidebar['Manage']['url_login_referer']['0']; ?>">
+						</div>
+					</form>
+ 				</div>
  			<?php endif; ?>
     </section>
 	<?php endif; ?>

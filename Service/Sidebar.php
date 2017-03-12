@@ -26,32 +26,32 @@ Class Sidebar{
 	}
 
 	public static function getCategory( $url,$uri,$k,$lang = array() ){
-  	$db = Typecho_Db::get();
-  	$query = $db->select()->from('table.album_category');
+  		$db = Typecho_Db::get();
+  		$query = $db->select()->from('table.album_category');
   	
-  	if ( Common::admin() == false ){ 
-  		$query = $query->where('public = ?', 1 );
-  	}
+  		if ( Common::admin() == false ){ 
+  			$query = $query->where('public = ?', 1 );
+  		}
   	
-  	$category = $db->fetchAll($query);
+  		$category = $db->fetchAll($query);
   	
-  	if ( substr($k['3'],0,1) == '2' ) $k['3'] = '0' ;
+  		if ( substr($k['3'],0,1) == '2' ) $k['3'] = '0' ;
 
-		$k['0'] = 0 ;
-		$result['count']['0'] = '0';
-		$result['name']['0'] = $lang['AllCategory'];
-		$result['description']['0'] = $lang['AllCategory'] ;
-		$result['url']['0'] = $url.implode(',',$k);
-		$result['current']['0'] = Common::current_uri($uri, implode(',',$k), '1');
+			$k['0'] = 0 ;
+			$result['count']['0'] = '0';
+			$result['name']['0'] = $lang['AllCategory'];
+			$result['description']['0'] = $lang['AllCategory'] ;
+			$result['url']['0'] = $url.implode(',',$k);
+			$result['current']['0'] = Common::current_uri($uri, implode(',',$k), '1');
 		
-		for($i=1,$p=0;$i<count($category)+1;$i++,$p++){
-			$result['name'][$i] = $category[$p]['name'];
-			$result['description'][$i] = $category[$p]['description'];
-			$result['count'][$i] = $category[$p]['count'];
-			$result['count']['0'] += $category[$p]['count'];
-			$k['0'] = $category[$p]['id'] ;
-			$result['url'][$i] = $url.implode(',',$k);
-			$result['current'][$i] = Common::current_uri($uri, implode(',',$k), '1');
+			for($i=1,$p=0;$i<count($category)+1;$i++,$p++){
+				$result['name'][$i] = $category[$p]['name'];
+				$result['description'][$i] = $category[$p]['description'];
+				$result['count'][$i] = $category[$p]['count'];
+				$result['count']['0'] += $category[$p]['count'];
+				$k['0'] = $category[$p]['id'] ;
+				$result['url'][$i] = $url.implode(',',$k);
+				$result['current'][$i] = Common::current_uri($uri, implode(',',$k), '1');
 			
 		}
 		return $result;
@@ -70,12 +70,12 @@ Class Sidebar{
 		$result['name'] = explode(',',$lang['name']);
 		$result['title'] = explode(',',$lang['title']);
 		
-  	if ( substr($k['3'],0,1) == '2' ) $k['3'] = '0' ;			
-  	for ($i = 0; $i < count($result['name']); $i++){
-  		$k['1'] = $i;
-  		$result['url'][$i] = $url.implode(',',$k);
-  		$result['current'][$i] = Common::current_uri($uri, implode(',',$k), '2');
-  	}
+  		if ( substr($k['3'],0,1) == '2' ) $k['3'] = '0' ;			
+  			for ($i = 0; $i < count($result['name']); $i++){
+  				$k['1'] = $i;
+  				$result['url'][$i] = $url.implode(',',$k);
+  				$result['current'][$i] = Common::current_uri($uri, implode(',',$k), '2');
+  			}
 		return $result;
 	}
 	
@@ -188,12 +188,12 @@ Class Sidebar{
 	
 	public static function getManage( $siteUrl,$url, $uri, $lang = array(), $k ){
 
-  	$req = array();
-  	for ( $i=0;$i < 3;$i++ ){
-  		if ( $i == 2 ){ $k['0'] = $k['1'] = $k['2'] = 0;}
-  		$k['3'] = $i;
-  		$req[$i] = implode(',',$k);
-  	}
+  		$req = array();
+  		for ( $i=0;$i < 3;$i++ ){
+  			if ( $i == 2 ){ $k['0'] = $k['1'] = $k['2'] = 0;}
+  			$k['3'] = $i;
+  			$req[$i] = implode(',',$k);
+  		}
   	
 		$options = Typecho_Widget::widget('Widget_Options');
 		$options->rewrite == 0 ? $index = 'index.php/' : $index = '';
